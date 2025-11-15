@@ -34,9 +34,94 @@ const [showServices, setShowServices] = useState(false);
         Leave a Google Review
       </button>
 
-      <p style={{ fontSize: 13, color: "#777", marginTop: 14 }}>
-        Tip: the Instagram button will open the Instagram app if installed, otherwise the browser.
-      </p>
+      {/* Services Button */}
+      <button
+        onClick={() => setShowServices(true)}
+        style={{
+          background: "#10B981",
+          color: "white",
+          padding: "12px 16px",
+          fontSize: 18,
+          borderRadius: 10,
+          width: "100%",
+          marginTop: 12,
+        }}
+      >
+        View Services & Prices
+      </button>
+      {/* ████████ SERVICES POPUP ████████ */}
+      {showServices && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.55)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 20,
+            zIndex: 1000,
+          }}
+        >
+          <div
+            style={{
+              background: "white",
+              width: "100%",
+              maxWidth: 450,
+              borderRadius: 12,
+              padding: 20,
+              textAlign: "left",
+              maxHeight: "80vh",
+              overflowY: "auto",
+            }}
+          >
+            <h2 style={{ marginTop: 0 }}>AARA Salon — Services & Prices</h2>
+
+            <h3>💄 Makeup</h3>
+            <ul>
+              <li>Party Makeup — Rs 3,000</li>
+              <li>Engagement Makeup — Rs 7,000</li>
+              <li>Bridal Makeup — Rs 20,000</li>
+            </ul>
+
+            <h3>💇 Hair</h3>
+            <ul>
+              <li>Haircut — Rs 1,000</li>
+              <li>Blow Dry — Rs 700</li>
+              <li>Keratin Treatment — Rs 10,000</li>
+            </ul>
+
+            <h3>🌿 Facial</h3>
+            <ul>
+              <li>Normal Facial — Rs 2,000</li>
+              <li>Whitening Facial — Rs 3,500</li>
+              <li>Hydra Facial — Rs 6,000</li>
+            </ul>
+
+            <h3>✋ Mehndi</h3>
+            <ul>
+              <li>Simple Mehndi — Rs 500</li>
+              <li>Full Hand Mehndi — Rs 1,500</li>
+              <li>Bridal Mehndi — Rs 6,000</li>
+            </ul>
+
+            <button
+              onClick={() => setShowServices(false)}
+              style={{
+                marginTop: 20,
+                width: "100%",
+                padding: "12px 16px",
+                borderRadius: 10,
+                background: "#111827",
+                color: "white",
+                fontSize: 16,
+              }}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

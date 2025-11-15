@@ -5,223 +5,185 @@ export default function ClientPage() {
   const [params] = useSearchParams();
   const username = params.get("username") || "";
   const review = params.get("review") || "";
-  const logo = params.get("logo") || "/logo.jpg"; // <-- should be in public folder
-  
+  const logo = params.get("logo") || "/logo.jpg";
+
   const [showServices, setShowServices] = useState(false);
+  const [openCategory, setOpenCategory] = useState(null);
+
+  const categories = [
+    { title: "Makeups 💄", items: ["Bridal Makeups", "Bridal Makeups with Services", "Party Makeup"] },
+    { title: "Hair Cuts ✂️", items: ["Basic Cut", "Face Forming", "Long Hair", "Short Layer", "Baby Hair Cuts"] },
+    { title: "Keratin 🧴", items: ["Shoulder Length", "Short Length", "Long Length"] },
+    { title: "Hair Colour 🎨", items: ["Roots", "Glossing 1", "Glossing 2", "Glossing 3", "Full Length 1", "Full Length 2"] },
+    { title: "Treatments 🌿", items: ["Head Oiling w/ Shoulders", "Shoulder Massage"] },
+    { title: "Massage 💆‍♀️", items: ["Hand Massage", "Foot Massage", "Body Massage", "Body Polisher", "Body Scrub", "Body Ubtan", "Full Body Fruit Wax", "Full Arms", "Full Legs Thin", "Full Legs Thick"] },
+    { title: "Sugar Wax 🍯", items: ["Full Body", "Full Arms", "Full Legs", "Under Arms", "Under Legs"] },
+    { title: "Threading 🧵", items: ["Eye Brow", "Upper Lips", "Chin Wax", "Side Wax", "Forehead", "Low Lips", "Chin Threading"] },
+    { title: "Face Polisher ✨", items: ["Whitening", "Brightening", "Janssen", "Gold", "Herbal"] },
+    { title: "Hair Styling 💇‍♀️", items: ["Basic Hair Do", "Hair Style", "Blow Dry", "Without Wash", "With Wash"] },
+    { title: "Manicure-Pedicure 💅", items: ["Basic", "Whitening", "Roma Spa"] },
+    { title: "Facials 🧖‍♀️", items: ["Basic Facial", "Supreme Whitening", "24K Gold Facial", "Hydra Facial", "Whitening Facial", "Crystal Whitening", "Brightening Facial", "Janssen Facial"] }
+  ];
+
+  function toggleCategory(i) {
+    setOpenCategory(openCategory === i ? null : i);
+  }
 
   function openInstagram() {
-    if (!username) {
-      alert("Instagram username not provided.");
-      return;
-    }
-    const appLink = `instagram://user?username=${username}`;
-    const webLink = `https://instagram.com/${username}`;
-    window.location.href = appLink;
-    setTimeout(() => (window.location.href = webLink), 1200);
+    if (!username) return alert("Instagram username not provided.");
+    const app = `instagram://user?username=${username}`;
+    const web = `https://instagram.com/${username}`;
+    window.location.href = app;
+    setTimeout(() => (window.location.href = web), 1200);
   }
 
   return (
-    <div
-      style={{
-        maxWidth: 520,
-        margin: "40px auto",
-        padding: 20,
-        textAlign: "center",
-        fontFamily: "Inter, system-ui, sans-serif",
-      }}
-    >
+    <div style={{
+      maxWidth: 520,
+      margin: "40px auto",
+      padding: 20,
+      fontFamily: "Inter, system-ui, sans-serif",
+      textAlign: "center",
+      background: "linear-gradient(135deg, #F7F5F2, #FFF7F0)",
+      borderRadius: 20,
+      boxShadow: "0 10px 30px rgba(0,0,0,0.12)"
+    }}>
       {logo && (
         <img
           src={logo}
           alt="Salon logo"
           style={{
-            width: 120,
-            height: 120,
-            borderRadius: 999,
+            width: 130,
+            height: 130,
+            borderRadius: "50%",
             objectFit: "cover",
             marginBottom: 14,
+            border: "4px solid #F7F5F2",
+            boxShadow: "0 6px 18px rgba(0,0,0,0.25)"
           }}
         />
       )}
 
-      <h1 style={{ margin: 0 }}>Welcome to our Salon ✨</h1>
-      <p style={{ color: "#555" }}>
-        Follow us on Instagram and leave a quick review — it helps a lot!
+      <h1 style={{ margin: 0, fontSize: 26, fontWeight: 700, color: "#B7687A" }}>
+        Thank You For Choosing US! 💖
+      </h1>
+      <p style={{ color: "#555", marginTop: 6, fontSize: 15 }}>
+        Hey beautiful! 💕 Follow us on Instagram and sprinkle a little love with a quick review ✨
       </p>
 
+      {/* Instagram Button */}
       <button
         onClick={openInstagram}
         style={{
-          background: "#E1306C",
+          background: "#D8A4A9",
           color: "white",
           padding: "12px 16px",
           fontSize: 18,
-          borderRadius: 10,
+          borderRadius: 12,
           width: "100%",
-          marginTop: 10,
+          marginTop: 16,
+          boxShadow: "0 4px 12px rgba(216,164,169,0.45)",
+          border: "none"
         }}
       >
-        Follow on Instagram {username ? `@${username}` : ""}
+        Follow us on Instagram {username ? `@${username}` : ""}
       </button>
 
+      {/* Review Button */}
       <button
-        onClick={() => {
-          if (!review) {
-            alert("Review link missing.");
-            return;
-          }
-          window.open(review, "_blank");
-        }}
+        onClick={() => review && window.open(review, "_blank")}
         style={{
-          background: "#4285F4",
+          background: "#8CB662",
           color: "white",
           padding: "12px 16px",
           fontSize: 18,
-          borderRadius: 10,
+          borderRadius: 12,
           width: "100%",
           marginTop: 12,
+          boxShadow: "0 4px 12px rgba(140,182,98,0.45)",
+          border: "none"
         }}
       >
-        Leave a Google Review
+        Leave a Google Review ⭐
       </button>
 
       {/* Services Button */}
       <button
         onClick={() => setShowServices(true)}
         style={{
-          background: "#10B981",
+          background: "#CFAF63",
           color: "white",
           padding: "12px 16px",
           fontSize: 18,
-          borderRadius: 10,
+          borderRadius: 12,
           width: "100%",
           marginTop: 12,
+          boxShadow: "0 4px 12px rgba(207,175,99,0.45)",
+          border: "none"
         }}
       >
-        View Services & Prices
+        View Services 💅
       </button>
 
-      {/* █████ SERVICES POPUP █████ */}
+      {/* Services Panel */}
       {showServices && (
-        <div
-          style={{
-            position: "fixed",
-            inset: 0,
-            background: "rgba(0,0,0,0.55)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
+        <div style={{
+          position: "fixed",
+          inset: 0,
+          background: "rgba(255,255,255,0.92)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          padding: 20,
+          zIndex: 50,
+          overflowY: "auto"
+        }}>
+          <div style={{
+            width: "100%",
+            maxWidth: 500,
+            borderRadius: 16,
             padding: 20,
-            zIndex: 1000,
-          }}
-        >
-          <div
-            style={{
-              background: "white",
-              width: "100%",
-              maxWidth: 450,
-              borderRadius: 12,
-              padding: 20,
-              textAlign: "left",
-              maxHeight: "80vh",
-              overflowY: "auto",
-            }}
-          >
-            <h2 style={{ marginTop: 0 }}>AARA Salon — Services & Prices</h2>
+            textAlign: "left",
+            boxShadow: "0 8px 28px rgba(0,0,0,0.2)",
+            background: "linear-gradient(135deg, #FFF7F0, #F7F5F2)"
+          }}>
+            <h2 style={{ fontSize: 24, fontWeight: 700, color: "#B7687A", marginBottom: 16 }}>
+              AARA Salon — Services
+            </h2>
 
-            <h3>Hair Cuts</h3>
-            <ul>
-              <li>Basic Cut</li>
-              <li>Face Forming</li>
-              <li>Long Hair</li>
-              <li>Short Layer</li>
-              <li>Baby Hair Cuts</li>
-            </ul>
+            {/* Category Grid */}
+            <div style={{
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: 12
+            }}>
+              {categories.map((cat, i) => (
+                <div key={i} style={{
+                  borderRadius: 12,
+                  background: "#FDF5F1",
+                  padding: "12px 16px",
+                  boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                  cursor: "pointer",
+                  transition: "all 0.3s",
+                  border: openCategory === i ? "2px solid #B7687A" : "1px solid #E0E0E0"
+                }}
+                  onClick={() => toggleCategory(i)}
+                >
+                  <div style={{ fontWeight: 600, fontSize: 16, display: "flex", justifyContent: "space-between" }}>
+                    {cat.title}
+                    <span>{openCategory === i ? "▲" : "▼"}</span>
+                  </div>
 
-            <h3>Keratin</h3>
-            <ul>
-              <li>Shoulder Length</li>
-              <li>Short Length</li>
-              <li>Long Length</li>
-            </ul>
-            <h3>Hair Colour</h3>
-            <ul>
-              <li>Roots</li>
-              <li>Glossing 1</li>
-              <li>Glossing 2</li>
-              <li>Glossing 3</li>
-              <li>Full Length 1</li>
-              <li>Full Length 2</li>
-            </ul>
-            <h3>Treatments</h3>
-            <ul>
-              <li>Head Oiling with Shoulders</li>
-              <li>Shoulder Massage</li>
-            </ul>
-            <h3>Massage</h3>
-            <ul>
-              <li>Hand Massage</li>
-              <li>Foot Massage</li>
-              <li>Body Massage</li>
-              <li>Body Polisher</li>
-              <li>Body Scrubing</li>
-              <li>Body Ubtan</li>
-              <li>Full Body Fruit Wax</li>
-              <li>Full Arms</li>
-              <li>Full Legs Thin</li>
-              <li>Full Legs Thick</li>
-            </ul>
-            <h3>Sugar Wax</h3>
-            <ul>
-              <li>Full Body</li>
-              <li>Full Arms</li>
-              <li>Full Legs</li>
-              <li>Under Arms</li>
-              <li>Under Legs</li>
-            </ul>
-            <h3>Threading</h3>
-            <ul>
-              <li>Eye Brow</li>
-              <li>Upper Lips</li>
-              <li>Chin Wax</li>
-              <li>Side Wax</li>
-              <li>Forehead</li>
-              <li>Low Lips</li>
-              <li>Chin Threading</li>
-            </ul>
-            <h3>Face Polisher</h3>
-            <ul>
-              <li>Whitening Polisher</li>
-              <li>Brightening Polisher</li>
-              <li>Janssen Polisher</li>
-              <li>Gold Polisher</li>
-              <li>Harbel Polisher</li>
-            </ul>
-            <h3>Hair Styling</h3>
-            <ul>
-              <li>Basic Hair Do</li>
-              <li>Hair Style</li>
-              <li>Blow Dry</li>
-              <li>Without Wash</li>
-              <li>With Wash</li>
-            </ul>
-            <h3>Manicure-Pedicure</h3>
-            <ul>
-              <li>Mani-Pedi Basic</li>
-              <li>Mani-Pedi Whitening</li>
-              <li>Roma Spa</li>
-            </ul>
-            <h3>Facials</h3>
-            <ul>
-              <li>Basic Facial</li>
-              <li>Supreme Whitening Facial</li>
-              <li>24K Gold Facial</li>
-              <li>Hydra Facial</li>
-              <li>Whitening Facial</li>
-              <li>Crystal Whitening Facial</li>
-              <li>Brightening Facial</li>
-              <li>Janssen Brightening Facial</li>
-            </ul>
+                  {openCategory === i && (
+                    <ul style={{ marginTop: 8, paddingLeft: 16, color: "#555", fontSize: 14 }}>
+                      {cat.items.map((item, x) => (
+                        <li key={x} style={{ margin: "4px 0" }}>{item}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              ))}
+            </div>
 
             <button
               onClick={() => setShowServices(false)}
@@ -229,13 +191,15 @@ export default function ClientPage() {
                 marginTop: 20,
                 width: "100%",
                 padding: "12px 16px",
-                borderRadius: 10,
-                background: "#111827",
+                borderRadius: 12,
+                background: "#B7687A",
                 color: "white",
                 fontSize: 16,
+                border: "none",
+                boxShadow: "0 4px 12px rgba(183,104,122,0.4)"
               }}
             >
-              Close
+              Close ✖
             </button>
           </div>
         </div>

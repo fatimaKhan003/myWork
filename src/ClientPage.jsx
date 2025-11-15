@@ -39,12 +39,17 @@ export default function ClientPage() {
 
   return (
     <div style={{
+  minHeight: "100vh",
+  background: "linear-gradient(135deg, #D3B38A, #FFF8F3)",
+  padding: "20px"
+}}>
+    <div style={{
       maxWidth: 520,
       margin: "40px auto",
       padding: 20,
       fontFamily: "Inter, system-ui, sans-serif",
       textAlign: "center",
-      background: "linear-gradient(135deg, #F7F5F2, #FFF7F0)",
+      background: "linear-gradient(135deg, #8d601dff, #FFF7F0)",
       borderRadius: 20,
       boxShadow: "0 10px 30px rgba(0,0,0,0.12)"
     }}>
@@ -64,10 +69,10 @@ export default function ClientPage() {
         />
       )}
 
-      <h1 style={{ margin: 0, fontSize: 26, fontWeight: 700, color: "#B7687A" }}>
+      <h1 style={{ margin: 0, fontSize: 26, fontWeight:"bolder", color: "#B7687A" }}>
         Thank You For Choosing US! 💖
       </h1>
-      <p style={{ color: "#555", marginTop: 6, fontSize: 15 }}>
+      <p style={{ color: "#555", marginTop: 6, fontSize: 19, fontWeight:"bold" }}>
         Hey beautiful! 💕 Follow us on Instagram and sprinkle a little love with a quick review ✨
       </p>
 
@@ -82,7 +87,7 @@ export default function ClientPage() {
           borderRadius: 12,
           width: "100%",
           marginTop: 16,
-          boxShadow: "0 4px 12px rgba(216,164,169,0.45)",
+          boxShadow: "0 4px 12px rgba(129, 97, 101, 0.45)",
           border: "none"
         }}
       >
@@ -100,7 +105,7 @@ export default function ClientPage() {
           borderRadius: 12,
           width: "100%",
           marginTop: 12,
-          boxShadow: "0 4px 12px rgba(140,182,98,0.45)",
+          boxShadow: "0 4px 12px rgba(83, 108, 58, 0.45)",
           border: "none"
         }}
       >
@@ -118,7 +123,7 @@ export default function ClientPage() {
           borderRadius: 12,
           width: "100%",
           marginTop: 12,
-          boxShadow: "0 4px 12px rgba(207,175,99,0.45)",
+          boxShadow: "0 4px 12px rgba(62, 52, 27, 0.45)",
           border: "none"
         }}
       >
@@ -165,7 +170,8 @@ export default function ClientPage() {
                   boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
                   cursor: "pointer",
                   transition: "all 0.3s",
-                  border: openCategory === i ? "2px solid #B7687A" : "1px solid #E0E0E0"
+                  border: openCategory === i ? "2px solid #B7687A" : "1px solid #E0E0E0",
+                
                 }}
                   onClick={() => toggleCategory(i)}
                 >
@@ -204,6 +210,7 @@ export default function ClientPage() {
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 }

@@ -150,7 +150,7 @@ export default function ClientPage() {
             padding: 20,
             textAlign: "left",
             boxShadow: "0 8px 28px rgba(0,0,0,0.2)",
-            background: "linear-gradient(135deg, #FFF7F0, #F7F5F2)"
+            background: "linear-gradient(135deg, #cb9d75ff, #F7F5F2)"
           }}>
             <h2 style={{ fontSize: 24, fontWeight: 700, textAlign:"center", color: "#B7687A", marginBottom: 16 }}>
               AARA Salon — Services
@@ -165,23 +165,23 @@ export default function ClientPage() {
               {categories.map((cat, i) => (
                 <div key={i} style={{
                   borderRadius: 12,
-                  background: "#FDF5F1",
+                  background: "#e9bca7e9",
                   padding: "12px 16px",
                   boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
                   cursor: "pointer",
                   transition: "all 0.3s",
-                  border: openCategory === i ? "2px solid #B7687A" : "1px solid #E0E0E0",
+                  border: openCategory === i ? "2px solid #B7687A" : "1px solid #ac5353ff",
                 
                 }}
                   onClick={() => toggleCategory(i)}
                 >
-                  <div style={{ fontWeight: 600, fontSize: 16, display: "flex", justifyContent: "space-between" }}>
+                  <div style={{ fontWeight: "bolder", fontSize: 16, display: "flex", justifyContent: "space-between" }}>
                     {cat.title}
                     <span>{openCategory === i ? "▲" : "▼"}</span>
                   </div>
 
                   {openCategory === i && (
-                    <ul style={{ marginTop: 8, paddingLeft: 16, color: "#555", fontSize: 14 }}>
+                    <ul style={{ marginTop: 8, paddingLeft: 16, color: "#000000ff", fontSize: 14, }}>
                       {cat.items.map((item, x) => (
                         <li key={x} style={{ margin: "4px 0" }}>{item}</li>
                       ))}

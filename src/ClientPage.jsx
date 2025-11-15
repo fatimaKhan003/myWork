@@ -5,8 +5,8 @@ export default function ClientPage() {
   const [params] = useSearchParams();
   const username = params.get("username") || "";   
   const review = params.get("review") || "";       
-  const logo = params.get("logo") || "";           
-
+  const logo = params.get("logo") || "./assets/logo.jpg";           
+const [showServices, setShowServices] = useState(false);
   function openInstagram() {
     if (!username) {
       alert("Instagram username not provided.");

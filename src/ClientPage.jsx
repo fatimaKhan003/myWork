@@ -1,190 +1,86 @@
-// Updated ClientPage with auto-loaded services from charges.pdf data
 import React, { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-
-// Restructured Services List (Parsed & Categorized)
-const SERVICES = [
-  {
-    category: "Hair Cuts",
-    items: [
-      { name: "Basic Cut", price: 2000 },
-      { name: "Face Forming", price: 3000 },
-      { name: "Long Hair", price: 4500 },
-      { name: "Short Layer", price: 4500 },
-      { name: "Baby Hair Cuts", price: 3000 },
-    ],
-  },
-  {
-    category: "Keratin",
-    items: [
-      { name: "Shoulder Length", price: 25000 },
-      { name: "Short Length", price: 30000 },
-      { name: "Long Length", price: 45000 },
-    ],
-  },
-  {
-    category: "Hair Color",
-    items: [
-      { name: "Roots", price: 5500 },
-      { name: "Glossing 1", price: 6000 },
-      { name: "Glossing 2", price: 8000 },
-      { name: "Glossing 3", price: 10000 },
-      { name: "Full Length 1", price: 18000 },
-      { name: "Full Length 2", price: 35000 },
-    ],
-  },
-  {
-    category: "Treatments",
-    items: [
-      { name: "Head Oiling with Shoulders", price: 2500 },
-      { name: "Shoulder Massage", price: 1500 },
-    ],
-  },
-  {
-    category: "Massage",
-    items: [
-      { name: "Hand Massage", price: 1200 },
-      { name: "Foot Massage", price: 1200 },
-      { name: "Body Massage", price: 9000 },
-      { name: "Body Polisher", price: 12000 },
-      { name: "Body Scrubbing", price: 8000 },
-      { name: "Body Ubtan", price: 7500 },
-      { name: "Full Body Fruit Wax", price: 9000 },
-      { name: "Full Arms", price: 1500 },
-      { name: "Full Legs Thin", price: 1500 },
-      { name: "Full Legs Thick", price: 2500 },
-    ],
-  },
-  {
-    category: "Sugar Wax",
-    items: [
-      { name: "Full Body", price: 7500 },
-      { name: "Full Arms", price: 1500 },
-      { name: "Full Legs", price: 2500 },
-      { name: "Under Arms", price: 500 },
-      { name: "Under Legs", price: 2500 },
-    ],
-  },
-  {
-    category: "Threading",
-    items: [
-      { name: "Eye Brow", price: 350 },
-      { name: "Upper Lips", price: 150 },
-      { name: "Chin Wax", price: 200 },
-      { name: "Side Wax", price: 1500 },
-      { name: "Forehead", price: 300 },
-      { name: "Low Lips", price: 200 },
-      { name: "Chin Threading", price: 200 },
-    ],
-  },
-  {
-    category: "Face Polisher",
-    items: [
-      { name: "Whitening Polisher", price: 2000 },
-      { name: "Brightening Polisher", price: 2000 },
-      { name: "Janssen Polisher", price: 2500 },
-      { name: "Gold Polisher", price: 2500 },
-      { name: "Herbal Polisher", price: 2000 },
-    ],
-  },
-  {
-    category: "Hair Styling",
-    items: [
-      { name: "Basic Hair Do", price: 3500 },
-      { name: "Hair Style", price: 4500 },
-      { name: "Blow Dry (Without Wash)", price: 2500 },
-      { name: "Blow Dry (With Wash)", price: 3000 },
-    ],
-  },
-  {
-    category: "Meni Pedi",
-    items: [
-      { name: "Basic Meni Pedi", price: 2000 },
-      { name: "Whitening Meni Pedi", price: 3000 },
-      { name: "Roma Spa", price: 5500 },
-    ],
-  },
-  {
-    category: "Facial",
-    items: [
-      { name: "Basic Facial", price: 4500 },
-      { name: "Supreme Whitening Facial", price: 7500 },
-      { name: "24K Gold Facial", price: 9000 },
-      { name: "Hydra Facial", price: 9000 },
-      { name: "Hydra Facial (Advance)", price: 12000 },
-      { name: "Whitening Facial", price: 6500 },
-      { name: "Crystal Whitening Facial", price: 7000 },
-      { name: "Brightening Facial", price: 8500 },
-      { name: "Janssen Brightening Facial", price: 3000 },
-    ],
-  },
-  {
-    category: "Bridal Package",
-    items: [
-      { name: "Nikkah + Engagement", price: 25000 },
-      { name: "Mehndi + Mayo", price: 30000 },
-      { name: "Barat", price: 45000 },
-      { name: "Walima", price: 35000 },
-    ],
-  },
-  {
-    category: "Special Deals",
-    items: [
-      { name: "Deal 01", price: 2499 },
-      { name: "Deal 02", price: 4699 },
-      { name: "Deal 03", price: 8999 },
-      { name: "Deal 04", price: 4500 },
-      { name: "Deal 05", price: 1500 },
-      { name: "Deal 06 (Mid-Length)", price: "25000 - 30000" },
-      { name: "Deal 06 (Waist-Length)", price: "30000 - 40000" },
-      { name: "Deal 07 (Shoulder-Length)", price: "15000 - 18000" },
-      { name: "Deal 07 (Mid-Length)", price: "22000 - 25000" },
-      { name: "Deal 07 (Waist-Length)", price: "25000 - 40000" },
-    ],
-  },
-];
 
 export default function ClientPage() {
   const [params] = useSearchParams();
   const username = params.get("username") || "";
   const review = params.get("review") || "";
-  const logo = params.get("logo") || "/logo.jpg";
-
+  const logo = params.get("logo") || "/logo.jpg"; // <-- should be in public folder
+  
   const [showServices, setShowServices] = useState(false);
 
+  function openInstagram() {
+    if (!username) {
+      alert("Instagram username not provided.");
+      return;
+    }
+    const appLink = `instagram://user?username=${username}`;
+    const webLink = `https://instagram.com/${username}`;
+    window.location.href = appLink;
+    setTimeout(() => (window.location.href = webLink), 1200);
+  }
+
   return (
-    <div className="w-full max-w-md mx-auto p-5 text-center font-inter">
+    <div
+      style={{
+        maxWidth: 520,
+        margin: "40px auto",
+        padding: 20,
+        textAlign: "center",
+        fontFamily: "Inter, system-ui, sans-serif",
+      }}
+    >
       {logo && (
         <img
           src={logo}
-          alt="Salon Logo"
-          className="w-28 h-28 rounded-full object-cover mx-auto mb-4"
+          alt="Salon logo"
+          style={{
+            width: 120,
+            height: 120,
+            borderRadius: 999,
+            objectFit: "cover",
+            marginBottom: 14,
+          }}
         />
       )}
 
-      <h1 className="text-2xl font-bold">Welcome to AARA Salon ✨</h1>
-      <p className="text-gray-600 mt-1">
-        Follow us on Instagram & leave us a quick Google review!
+      <h1 style={{ margin: 0 }}>Welcome to our Salon ✨</h1>
+      <p style={{ color: "#555" }}>
+        Follow us on Instagram and leave a quick review — it helps a lot!
       </p>
 
-      {/* Instagram */}
       <button
-        onClick={() => {
-          if (!username) return alert("Instagram username missing");
-          const app = `instagram://user?username=${username}`;
-          const web = `https://instagram.com/${username}`;
-          window.location.href = app;
-          setTimeout(() => (window.location.href = web), 1200);
+        onClick={openInstagram}
+        style={{
+          background: "#E1306C",
+          color: "white",
+          padding: "12px 16px",
+          fontSize: 18,
+          borderRadius: 10,
+          width: "100%",
+          marginTop: 10,
         }}
-        className="w-full bg-pink-600 text-white py-3 rounded-xl text-lg mt-4"
       >
         Follow on Instagram {username ? `@${username}` : ""}
       </button>
 
-      {/* Google Review */}
       <button
-        onClick={() => review && window.open(review, "_blank")}
-        className="w-full bg-blue-600 text-white py-3 rounded-xl text-lg mt-3"
+        onClick={() => {
+          if (!review) {
+            alert("Review link missing.");
+            return;
+          }
+          window.open(review, "_blank");
+        }}
+        style={{
+          background: "#4285F4",
+          color: "white",
+          padding: "12px 16px",
+          fontSize: 18,
+          borderRadius: 10,
+          width: "100%",
+          marginTop: 12,
+        }}
       >
         Leave a Google Review
       </button>
@@ -192,39 +88,152 @@ export default function ClientPage() {
       {/* Services Button */}
       <button
         onClick={() => setShowServices(true)}
-        className="w-full bg-emerald-600 text-white py-3 rounded-xl text-lg mt-3"
+        style={{
+          background: "#10B981",
+          color: "white",
+          padding: "12px 16px",
+          fontSize: 18,
+          borderRadius: 10,
+          width: "100%",
+          marginTop: 12,
+        }}
       >
         View Services & Prices
       </button>
 
-      {/* Popup */}
+      {/* █████ SERVICES POPUP █████ */}
       {showServices && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl w-full max-w-lg p-5 max-h-[80vh] overflow-y-auto text-left">
-            <h2 className="text-xl font-bold mb-4">AARA Salon — Services</h2>
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "rgba(0,0,0,0.55)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 20,
+            zIndex: 1000,
+          }}
+        >
+          <div
+            style={{
+              background: "white",
+              width: "100%",
+              maxWidth: 450,
+              borderRadius: 12,
+              padding: 20,
+              textAlign: "left",
+              maxHeight: "80vh",
+              overflowY: "auto",
+            }}
+          >
+            <h2 style={{ marginTop: 0 }}>AARA Salon — Services & Prices</h2>
 
-            {SERVICES.map((section) => (
-              <div key={section.category} className="mb-5">
-                <h3 className="text-lg font-semibold mb-2">{section.category}</h3>
-                <ul className="space-y-1">
-                  {section.items.map((item) => (
-                    <li
-                      key={item.name}
-                      className="flex justify-between border-b pb-1 text-sm"
-                    >
-                      <span>{item.name}</span>
-                      <span className="font-medium">
-                        Rs {item.price}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+            <h3>Hair Cuts</h3>
+            <ul>
+              <li>Basic Cut</li>
+              <li>Face Forming</li>
+              <li>Long Hair</li>
+              <li>Short Layer</li>
+              <li>Baby Hair Cuts</li>
+            </ul>
+
+            <h3>Keratin</h3>
+            <ul>
+              <li>Shoulder Length</li>
+              <li>Short Length</li>
+              <li>Long Length</li>
+            </ul>
+            <h3>Hair Colour</h3>
+            <ul>
+              <li>Roots</li>
+              <li>Glossing 1</li>
+              <li>Glossing 2</li>
+              <li>Glossing 3</li>
+              <li>Full Length 1</li>
+              <li>Full Length 2</li>
+            </ul>
+            <h3>Treatments</h3>
+            <ul>
+              <li>Head Oiling with Shoulders</li>
+              <li>Shoulder Massage</li>
+            </ul>
+            <h3>Massage</h3>
+            <ul>
+              <li>Hand Massage</li>
+              <li>Foot Massage</li>
+              <li>Body Massage</li>
+              <li>Body Polisher</li>
+              <li>Body Scrubing</li>
+              <li>Body Ubtan</li>
+              <li>Full Body Fruit Wax</li>
+              <li>Full Arms</li>
+              <li>Full Legs Thin</li>
+              <li>Full Legs Thick</li>
+            </ul>
+            <h3>Sugar Wax</h3>
+            <ul>
+              <li>Full Body</li>
+              <li>Full Arms</li>
+              <li>Full Legs</li>
+              <li>Under Arms</li>
+              <li>Under Legs</li>
+            </ul>
+            <h3>Threading</h3>
+            <ul>
+              <li>Eye Brow</li>
+              <li>Upper Lips</li>
+              <li>Chin Wax</li>
+              <li>Side Wax</li>
+              <li>Forehead</li>
+              <li>Low Lips</li>
+              <li>Chin Threading</li>
+            </ul>
+            <h3>Face Polisher</h3>
+            <ul>
+              <li>Whitening Polisher</li>
+              <li>Brightening Polisher</li>
+              <li>Janssen Polisher</li>
+              <li>Gold Polisher</li>
+              <li>Harbel Polisher</li>
+            </ul>
+            <h3>Hair Styling</h3>
+            <ul>
+              <li>Basic Hair Do</li>
+              <li>Hair Style</li>
+              <li>Blow Dry</li>
+              <li>Without Wash</li>
+              <li>With Wash</li>
+            </ul>
+            <h3>Manicure-Pedicure</h3>
+            <ul>
+              <li>Mani-Pedi Basic</li>
+              <li>Mani-Pedi Whitening</li>
+              <li>Roma Spa</li>
+            </ul>
+            <h3>Facials</h3>
+            <ul>
+              <li>Basic Facial</li>
+              <li>Supreme Whitening Facial</li>
+              <li>24K Gold Facial</li>
+              <li>Hydra Facial</li>
+              <li>Whitening Facial</li>
+              <li>Crystal Whitening Facial</li>
+              <li>Brightening Facial</li>
+              <li>Janssen Brightening Facial</li>
+            </ul>
 
             <button
               onClick={() => setShowServices(false)}
-              className="w-full bg-gray-900 text-white py-3 rounded-xl text-md mt-4"
+              style={{
+                marginTop: 20,
+                width: "100%",
+                padding: "12px 16px",
+                borderRadius: 10,
+                background: "#111827",
+                color: "white",
+                fontSize: 16,
+              }}
             >
               Close
             </button>

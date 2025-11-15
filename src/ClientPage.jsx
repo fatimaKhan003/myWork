@@ -147,7 +147,7 @@ export default function ClientPage() {
             boxShadow: "0 8px 28px rgba(0,0,0,0.2)",
             background: "linear-gradient(135deg, #FFF7F0, #F7F5F2)"
           }}>
-            <h2 style={{ fontSize: 24, fontWeight: 700, color: "#B7687A", marginBottom: 16 }}>
+            <h2 style={{ fontSize: 24, fontWeight: 700, textAlign:"center", color: "#B7687A", marginBottom: 16 }}>
               AARA Salon — Services
             </h2>
 
